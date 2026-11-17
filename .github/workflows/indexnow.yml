@@ -1,0 +1,37 @@
+name: Notificar Bing via IndexNow
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'index.md'
+      - 'reference/**/*.md'
+
+jobs:
+  submit-indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Aguardar deploy do GitHub Pages
+        run: sleep 45
+
+      - name: Enviar URLs para o IndexNow (Bing)
+        run: |
+          curl -X POST "https://indexnow.org" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d '{
+              "host": "saless2.github.io",
+              "key": "8f4e2a9c1b7d6e3f0a5c8b2d4e1f9a7c",
+              "keyLocation": "https://github.io",
+              "urlList": [
+                "https://github.io",
+                "https://github.ioreference/Abertura%20de%20Chamado%20Simples.html",
+                "https://github.ioreference/Abertura%20de%20chamado%20com%20Encaminhamento%20para%20N2.html",
+                "https://github.ioreference/Erro%20Tasy%20-%20Limpeza%20de%20Temp.html",
+                "https://github.ioreference/Instalação%20de%20Impressora.html",
+                "https://github.ioreference/KB%20-%20N1.html",
+                "https://github.ioreference/Micro%20sem%20espaço.html",
+                "https://github.ioreference/RESET%20DE%20SENHA%20REDE.html",
+                "https://github.ioreference/RESET%20DE%20SENHA%20TASY.html"
+              ]
+            }'
